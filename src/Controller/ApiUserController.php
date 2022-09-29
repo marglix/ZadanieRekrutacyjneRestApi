@@ -11,6 +11,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 class ApiUserController extends AbstractController
 {
@@ -25,6 +28,34 @@ class ApiUserController extends AbstractController
     }
 
     /**
+     * User registration
+     * 
+     * @OA\Post(description="User registration")
+     * 
+     * @OA\RequestBody(
+     *      description="User data",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="username",
+     *                  type="string",
+     *                  description="Username of account"
+     *              ),
+     *              @OA\Property(
+     *                  property="password",
+     *                  type="string",
+     *                  description="Password of account"
+     *              )
+     *          )
+     *      )
+     * )
+     * 
+     * @OA\Response(
+     *      response=201,
+     *      description="Registration completed"
+     * )
+     * 
      * @Route("/api/users", name="register", methods={"POST"})
      */
     public function register(Request $request): JsonResponse

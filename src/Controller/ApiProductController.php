@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 use App\Repository\ProductRepository;
 
 class ApiProductController extends AbstractController
@@ -17,7 +19,36 @@ class ApiProductController extends AbstractController
     }
 
     /**
+     * List of all products
+     * 
      * @Route("/api/products", name="api_product", methods={"GET"})
+     * 
+     * @OA\Get(description="List of all products")
+     * 
+     * @OA\Response(
+     *      response=200,
+     *      description="Ok",
+     *      content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="Name of Product"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="Description of Product"
+     *                  )
+     *              )
+     *          )
+     *      }
+     * )
+     * 
+     * @OA\Tag(name="Products")
+     * @Security(name="Bearer")
      */
     public function getProducts(): JsonResponse
     {
