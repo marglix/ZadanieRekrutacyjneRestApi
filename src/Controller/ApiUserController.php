@@ -12,7 +12,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ApiController extends AbstractController
+class ApiUserController extends AbstractController
 {
     private UserRepository $userRepository;
 
