@@ -15,12 +15,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         login:
-            pattern: ^/api/login
+            pattern: ^/api
             stateless: true
             json_login:
-                check_path: /api/login_check
+                check_path: api_login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        refresh:
+            pattern: ^/api/token/refresh
+            stateless: true
+            refresh_jwt: ~
         
 
             # activate different ways to authenticate
@@ -32,8 +37,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTENTICATED_FULLY }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
