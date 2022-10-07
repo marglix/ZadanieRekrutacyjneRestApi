@@ -11,6 +11,12 @@ services:
       - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
-
+  app:
+    build: .
+    image: api
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
 volumes:
   db-data:
